@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recerca — Ius Quanticum</title>
-  <meta name="description" content="Línies de recerca i materials en desenvolupament vinculats a Ius Quanticum." />
+  <title>Actualitat — Ius Quanticum</title>
+  <meta name="description" content="Actualitat jurídica en format feed resumit amb IA, context editorial i accés directe a fonts originals." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,7 +20,7 @@
     (function(){
       var params = new URLSearchParams(window.location.search);
       if (!params.get("route") && !window.location.hash) {
-        params.set("route", "/research");
+        params.set("route", "/actualitat");
         history.replaceState(null, "", window.location.pathname + "?" + params.toString());
       }
     })();

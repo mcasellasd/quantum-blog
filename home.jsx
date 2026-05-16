@@ -8,14 +8,14 @@ function Home({ navigate }) {
   const dispatch = [
     ...posts.slice(0, 3).map(p => ({ date: p.date, kind: "text", title: p.title, ext: `${p.readMin} min`, go: () => navigate(`/blog/${p.slug}`) })),
     { date: "2026-04-18", kind: "projecte", title: `${window.SITE.projects[0].name} entra en beta editorial`, ext: "lab", go: () => navigate(`/lab/${window.SITE.projects[0].slug}`) },
-    { date: "2026-03-28", kind: "nota", title: "La secció de recerca queda oberta com a arxiu en construcció", ext: "avís", go: () => navigate("/research") },
+    { date: "2026-05-15", kind: "actualitat", title: "Portada d'actualitat legal resumida amb IA i fonts traçables", ext: "feed", go: () => navigate("/actualitat") },
     { date: "2026-03-01", kind: "projecte", title: `${window.SITE.projects[1].name} publica la primera versió imprimible`, ext: "kit", go: () => navigate(`/lab/${window.SITE.projects[1].slug}`) },
   ].sort((a, b) => b.date.localeCompare(a.date));
 
   const sections = [
     { num: "01", title: "Blog", path: "/blog", desc: "Assajos i notes sobre dret, tecnologia, llenguatge públic i criteri institucional." },
     { num: "02", title: "Projectes", path: "/lab", desc: "Arxius, kits i prototips petits per provar idees en forma operativa." },
-    { num: "03", title: "Recerca", path: "/research", desc: "Secció oberta però encara en construcció. Servirà per ordenar materials llargs i línies de treball." },
+    { num: "03", title: "Actualitat", path: "/actualitat", desc: "Feed resumit amb IA: senyals del dia, context útil i enllaç directe a les fonts originals." },
     { num: "04", title: "Sobre", path: "/about", desc: "Context del projecte, posició editorial i canals de contacte quan arribi el moment." },
   ];
 

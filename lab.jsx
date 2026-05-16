@@ -2,6 +2,11 @@
 
 function LabIndex({ navigate }) {
   const marks = ["circles", "waves", "ket", "grid"];
+  const projects = window.SITE.projects;
+  const featured = projects.find((p) => p.slug === "trobar-article") || projects[0];
+  const ecosystemSlugs = ["dretvisual-clars", "viajusta", "feed-juridic"];
+  const ecosystem = projects.filter((p) => ecosystemSlugs.includes(p.slug));
+  const core = projects.filter((p) => p.slug !== featured.slug && !ecosystemSlugs.includes(p.slug));
   const counts = window.SITE.projects.reduce((acc, project) => {
     acc[project.status] = (acc[project.status] || 0) + 1;
     return acc;
@@ -11,39 +16,79 @@ function LabIndex({ navigate }) {
     <main className="page-content shell">
       <SectionHead
         eyebrow={`Projectes · ${window.SITE.projects.length.toString().padStart(2, "0")} peces`}
-        title="Projectes petits, útils i deliberadament provisionals."
-        blurb="Aquí les idees es posen sota pressió. No com a producte final, sinó com a arxiu, kit o prototip que obliga a aclarir què val la pena mantenir i què s'ha de descartar."
+        title="Lab acadèmic d'un estudiant de dret amb IA."
+        blurb="Un espai de prova per convertir dubtes jurídics en eines reals de lectura, orientació i context. No és consultoria: és recerca aplicada en públic, amb mètode, iteració i verificació de límits."
         aux={<div className="eyebrow stack-top-md"><span className="dot">●</span>&nbsp; {(counts.live || 0).toString().padStart(2, "0")} live · {(counts.beta || 0).toString().padStart(2, "0")} beta · {(counts.concept || 0).toString().padStart(2, "0")} concept</div>}
       />
-      <section className="lab-grid">
-        {window.SITE.projects.map((p, i) => (
-          <article key={p.slug} className="lab-card" onClick={() => navigate(`/lab/${p.slug}`)}>
-            <div className="head">
-              <span>/ projecte · {p.year}</span>
-              <span className={`status ${p.status}`}>{p.status}</span>
-            </div>
-            <div className="viz"><MiniMark kind={marks[i % marks.length]} /></div>
-            <h3>{p.name}</h3>
-            <p className="desc">{p.tagline}</p>
-            <div className="stack">— {p.stack}</div>
-          </article>
-        ))}
+
+      <section className="lab-feature" onClick={() => navigate(`/lab/${featured.slug}`)}>
+        <div className="head">
+          <span>/ peça destacada · {featured.year}</span>
+          <span className={`status ${featured.status}`}>{featured.status}</span>
+        </div>
+        <h3>{featured.name}</h3>
+        <p className="desc">{featured.tagline}</p>
+        <div className="stack">— {featured.stack}</div>
+      </section>
+
+      <section className="lab-cluster-wrap">
+        <div className="lab-cluster">
+          <div className="lab-cluster-head">
+            <h4>Eines base</h4>
+            <span>{core.length} projectes</span>
+          </div>
+          <div className="lab-grid lab-grid-compact">
+            {core.map((p, i) => (
+              <article key={p.slug} className="lab-card" onClick={() => navigate(`/lab/${p.slug}`)}>
+                <div className="head">
+                  <span>/ projecte · {p.year}</span>
+                  <span className={`status ${p.status}`}>{p.status}</span>
+                </div>
+                <div className="viz"><MiniMark kind={marks[i % marks.length]} /></div>
+                <h3>{p.name}</h3>
+                <p className="desc">{p.tagline}</p>
+                <div className="stack">— {p.stack}</div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="lab-cluster">
+          <div className="lab-cluster-head">
+            <h4>Ecosistema vinculat</h4>
+            <span>{ecosystem.length} projectes</span>
+          </div>
+          <div className="lab-grid lab-grid-compact">
+            {ecosystem.map((p, i) => (
+              <article key={p.slug} className="lab-card" onClick={() => navigate(`/lab/${p.slug}`)}>
+                <div className="head">
+                  <span>/ satèl·lit · {p.year}</span>
+                  <span className={`status ${p.status}`}>{p.status}</span>
+                </div>
+                <div className="viz"><MiniMark kind={marks[(i + 2) % marks.length]} /></div>
+                <h3>{p.name}</h3>
+                <p className="desc">{p.tagline}</p>
+                <div className="stack">— {p.stack}</div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="shell lab-note-section">
         <div className="eyebrow"><span className="dot">●</span>&nbsp; Nota de projecte</div>
         <h2 className="h2 lab-note-title">
-          El laboratori no és un estudi de producte ni una promesa de <em className="accent-emphasis">scaling</em>.
+          Aquest lab acadèmic no ven certeses: documenta aprenentatge jurídic assistit per IA.
         </h2>
         <div className="lab-note-grid">
           <p className="lab-note-copy">
-            No és una startup. Aquestes peces no busquen finançament ni rondes. Busquen forma, fricció i claredat.
+            Neix des d'una mirada d'estudiant de dret: primer entendre bé la norma, després dissenyar una eina que redueixi fricció de lectura.
           </p>
           <p className="lab-note-copy">
-            No està acabat. La majoria de projectes són prou estables per pensar amb ells, però no prou tancats per presentar-los com a solució definitiva.
+            La IA s'utilitza com a suport pedagògic i de context. No substitueix assessorament professional ni decisió jurídica qualificada.
           </p>
           <p className="lab-note-copy">
-            No és una caixa negra. Tot el que no contingui material sensible o dependent de context privat es podrà obrir, revisar o reformular.
+            Cada iteració es publica en obert amb límits explícits, perquè sigui auditable, discutible i millorable per la comunitat jurídica.
           </p>
         </div>
       </section>
@@ -84,8 +129,16 @@ function ProjectDetail({ slug, navigate }) {
           <div className="field"><span className="k">Stack</span><span className="v">{p.stack}</span></div>
           <div className="field"><span className="k">Llicència</span><span className="v">Definició pendent segons cada peça</span></div>
           <div className="actions">
-            <button className="btn">Obrir ↗</button>
-            <button className="btn ghost">Font ↗</button>
+            {p.url ? (
+              <a className="btn" href={p.url} target="_blank" rel="noopener noreferrer">Obrir mòdul ↗</a>
+            ) : (
+              <button className="btn" type="button">Obrir mòdul ↗</button>
+            )}
+            {p.url ? (
+              <a className="btn ghost" href={p.url} target="_blank" rel="noopener noreferrer">Font ↗</a>
+            ) : (
+              <button className="btn ghost" type="button">Font ↗</button>
+            )}
             <button className="btn ghost">Context</button>
           </div>
         </div>

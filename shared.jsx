@@ -96,6 +96,7 @@ const PAGE_FILES = {
   "/": "index.html",
   "/blog": "blog.html",
   "/lab": "lab.html",
+  "/actualitat": "research.html",
   "/research": "research.html",
   "/about": "about.html",
 };
@@ -129,7 +130,7 @@ function Header({ route, navigate }) {
         {link("/", "Inici")}
         {link("/blog", "Blog")}
         {link("/lab", "Projectes")}
-        {link("/research", "Recerca")}
+        {link("/actualitat", "Actualitat")}
         {link("/about", "Sobre")}
       </nav>
     </header>
@@ -151,7 +152,7 @@ function Footer({ navigate }) {
         <ul>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="lab.html">Projectes</a></li>
-          <li><a href="research.html">Recerca</a></li>
+          <li><a href="research.html">Actualitat</a></li>
           <li><a href="about.html">Sobre</a></li>
         </ul>
       </div>

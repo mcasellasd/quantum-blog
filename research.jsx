@@ -1,24 +1,27 @@
-// research.jsx — formal pubs + working papers + talks
+// research.jsx — actualitat feed resumida amb IA
 
 function Research({ navigate }) {
-  const [tab, setTab] = React.useState("published");
+  const items = (window.SITE.actualitat || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+  const categories = ["tot", ...Array.from(new Set(items.map((i) => i.category)))];
+  const [tab, setTab] = React.useState("tot");
   const tabs = [
-    { id: "published", label: "Publicat", n: window.SITE.papers.length },
-    { id: "working", label: "En curs", n: window.SITE.workingPapers.length },
-    { id: "talks", label: "Xerrades", n: window.SITE.talks.length },
+    ...categories.map((category) => ({
+      id: category,
+      label: category === "tot" ? "Tot" : category,
+      n: category === "tot" ? items.length : items.filter((i) => i.category === category).length,
+    })),
   ];
 
-  const list = tab === "published" ? window.SITE.papers
-              : tab === "working" ? window.SITE.workingPapers
-              : null;
+  const list = tab === "tot" ? items : items.filter((i) => i.category === tab);
+  const urgentCount = items.filter((i) => i.urgency === "alta").length;
 
   return (
     <main className="page-content shell">
       <SectionHead
-        eyebrow="Recerca · secció en construcció"
-        title="Materials, línies de treball i referències en curs."
-        blurb="Aquesta secció quedarà com un arxiu de materials llargs, papers, notes de recerca i xerrades. Ara mateix només hi ha la carcassa i alguns marcadors provisionals."
-        aux={<div className="research-metrics"><span>h-index <b>9</b></span><span>cites <b>241</b></span><span>ORCID <b>0000-0001-…</b></span></div>}
+        eyebrow="Actualitat · feed resumit amb IA"
+        title="Context, no només titulars."
+        blurb="Portada d'actualitat jurídica amb resum assistit per IA, lectura ràpida i enllaç directe a la font original. Pensat per detectar senyals útils abans de decidir què cal llegir a fons."
+        aux={<div className="research-metrics"><span>entrades <b>{items.length}</b></span><span>urgents <b>{urgentCount}</b></span><span>mode <b>resum IA</b></span></div>}
       />
 
       <div className="research-tabs">
@@ -29,48 +32,36 @@ function Research({ navigate }) {
         ))}
       </div>
 
-      {list && (
-        <section className="research-section-pad">
-          {list.map((paper, i) => (
-            <article key={i} className="pub-item">
-              <div className="num">[{String(list.length - i).padStart(2, "0")}]</div>
-              <div>
-                <h3 className="pub-title">{paper.title}</h3>
-                <div className="authors">{paper.authors}</div>
-                <div className="venue">{paper.venue}</div>
-                <div className="links">
-                  {paper.links.map(l => <a key={l} href="#">{l}</a>)}
-                </div>
-              </div>
-              <div className="cit">{paper.cit}</div>
-            </article>
-          ))}
-        </section>
-      )}
-
-      {tab === "talks" && (
-        <section className="research-section-pad">
-          {window.SITE.talks.map((t, i) => (
-            <article key={i} className="talk-item">
-              <span className="when">{t.when}</span>
-              <span className="what">{t.what}</span>
-              <span className="where">{t.where}</span>
-            </article>
-          ))}
-        </section>
-      )}
+      <section className="research-section-pad">
+        {list.map((item, i) => (
+          <article key={i} className="actualitat-item">
+            <div className="actualitat-kicker">
+              <span className="when">{formatDate(item.date)}</span>
+              <span className="actualitat-cat">{item.category}</span>
+              <span className={`actualitat-urgency ${item.urgency === "alta" ? "is-high" : ""}`}>{item.urgency === "alta" ? "urgent" : "seguiment"}</span>
+            </div>
+            <h3 className="actualitat-title">{item.title}</h3>
+            <p className="actualitat-summary">{item.summary}</p>
+            <p className="actualitat-why"><b>Per què importa:</b> {item.why}</p>
+            <div className="actualitat-meta">
+              <span>font: {item.source}</span>
+              <a href={item.url} target="_blank" rel="noopener noreferrer">veure font ↗</a>
+            </div>
+          </article>
+        ))}
+      </section>
 
       <section className="research-footer-grid">
         <div>
-          <h6 className="research-foot-title">Citar aquest material</h6>
+          <h6 className="research-foot-title">Metodologia de resum</h6>
           <p className="research-foot-copy">
-            Quan aquesta secció tingui contingut definitiu hi haurà referències i versions clares. Si cites un esborrany, fes servir sempre el número de versió.
+            Cada entrada parteix de la font original i passa per una capa de resum assistit amb IA. L'objectiu és orientar lectura, no tancar interpretacions ni substituir verificació jurídica.
           </p>
         </div>
         <div>
-          <h6 className="research-foot-title">Treballar amb mi</h6>
+          <h6 className="research-foot-title">Límits i avís</h6>
           <p className="research-foot-copy">
-            Per ara aquesta pàgina només indica que la recerca és una línia oberta, no un inventari tancat. Si vols contactar, ves a la secció <a href="#/about" onClick={(e)=>{e.preventDefault();navigate("/about");}} className="inline-link">Sobre</a>.
+            Aquest feed és orientatiu. En matèria sensible, sempre cal contrastar text legal i criteri professional. Si vols context del projecte, ves a <a href="#/about" onClick={(e)=>{e.preventDefault();navigate("/about");}} className="inline-link">Sobre</a>.
           </p>
         </div>
       </section>

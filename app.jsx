@@ -58,7 +58,7 @@ function App() {
     if (route.startsWith("/blog/")) return <Article slug={route.split("/")[2]} navigate={navigate} />;
     if (route === "/lab") return <LabIndex navigate={navigate} />;
     if (route.startsWith("/lab/")) return <ProjectDetail slug={route.split("/")[2]} navigate={navigate} />;
-    if (route === "/research") return <Research navigate={navigate} />;
+    if (route === "/actualitat" || route === "/research") return <Research navigate={navigate} />;
     if (route === "/about") return <About navigate={navigate} />;
     return <Home navigate={navigate} />;
   };
