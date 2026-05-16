@@ -6,7 +6,6 @@ function LabIndex({ navigate }) {
   const featured = projects.find((p) => p.slug === "trobar-article") || projects[0];
   const ecosystemSlugs = ["dretvisual-clars", "viajusta", "feed-juridic"];
   const ecosystem = projects.filter((p) => ecosystemSlugs.includes(p.slug));
-  const core = projects.filter((p) => p.slug !== featured.slug && !ecosystemSlugs.includes(p.slug));
   const counts = window.SITE.projects.reduce((acc, project) => {
     acc[project.status] = (acc[project.status] || 0) + 1;
     return acc;
@@ -17,7 +16,7 @@ function LabIndex({ navigate }) {
       <SectionHead
         eyebrow={`Projectes · ${window.SITE.projects.length.toString().padStart(2, "0")} peces`}
         title="Lab acadèmic d'un estudiant de dret amb IA."
-        blurb="Un espai de prova per convertir dubtes jurídics en eines reals de lectura, orientació i context. No és consultoria: és recerca aplicada en públic, amb mètode, iteració i verificació de límits."
+        blurb="Un espai de prova per convertir dubtes jurídics en eines reals de lectura, orientació i context. La suite Què diu la llei integra cerca, temàtiques i Hermes en un únic projecte."
         aux={<div className="eyebrow stack-top-md"><span className="dot">●</span>&nbsp; {(counts.live || 0).toString().padStart(2, "0")} live · {(counts.beta || 0).toString().padStart(2, "0")} beta · {(counts.concept || 0).toString().padStart(2, "0")} concept</div>}
       />
 
@@ -34,31 +33,10 @@ function LabIndex({ navigate }) {
       <section className="lab-cluster-wrap">
         <div className="lab-cluster">
           <div className="lab-cluster-head">
-            <h4>Eines base</h4>
-            <span>{core.length} projectes</span>
-          </div>
-          <div className="lab-grid lab-grid-compact">
-            {core.map((p, i) => (
-              <article key={p.slug} className="lab-card" onClick={() => navigate(`/lab/${p.slug}`)}>
-                <div className="head">
-                  <span>/ projecte · {p.year}</span>
-                  <span className={`status ${p.status}`}>{p.status}</span>
-                </div>
-                <div className="viz"><MiniMark kind={marks[i % marks.length]} /></div>
-                <h3>{p.name}</h3>
-                <p className="desc">{p.tagline}</p>
-                <div className="stack">— {p.stack}</div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="lab-cluster">
-          <div className="lab-cluster-head">
             <h4>Ecosistema vinculat</h4>
             <span>{ecosystem.length} projectes</span>
           </div>
-          <div className="lab-grid lab-grid-compact">
+          <div className={`lab-grid ${ecosystem.length < 2 ? "lab-grid-compact" : ""}`}>
             {ecosystem.map((p, i) => (
               <article key={p.slug} className="lab-card" onClick={() => navigate(`/lab/${p.slug}`)}>
                 <div className="head">

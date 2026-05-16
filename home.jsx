@@ -25,10 +25,10 @@ function Home({ navigate }) {
         <div>
           <div className="eyebrow"><span className="dot">●</span>&nbsp; Quadern · Projectes · Arxiu · Edició 2026</div>
           <h1 className="h-display stack-top-sm">
-            Pensar el dret<br/>sense obeir el <em>ritme</em><br/>de la propaganda.
+            Dret. Tecnologia. Quàntica. IA.
           </h1>
           <p className="lede">
-            Ius Quanticum és un espai editorial en català sobre dret, tecnologia i criteri. No promet velocitat ni exhaustivitat: promet lectura atenta, paraules més precises i projectes que serveixin per veure millor què està passant.
+            Ius Quanticum és un espai de pedagogia i experimentació acadèmcia en català sobre dret i les noves tecnologia. Un espai d'exploració en obert on es publiquen notícies, projectes i materials de recerca en procés. 
           </p>
           <div className="hero-meta">
             <span><b>{window.SITE.posts.length}</b> textos oberts</span>
@@ -51,6 +51,15 @@ function Home({ navigate }) {
             <div className="arrow">→ entrar</div>
           </article>
         ))}
+      </section>
+
+      <section className="shell home-lab-banner" onClick={() => navigate("/lab")}>
+        <div className="home-lab-banner-kicker">Lab · Projectes en obert</div>
+        <div className="home-lab-banner-main">
+          <h2>Prototips jurídics amb IA per passar de la idea a l'eina.</h2>
+          <p>Explora experiments actius, metodologies i recursos aplicats per entendre com la tecnologia transforma la pràctica del dret.</p>
+        </div>
+        <div className="home-lab-banner-cta">Entrar al lab →</div>
       </section>
 
       <section className="shell latest">

@@ -27,8 +27,8 @@ function BlogIndex({ navigate }) {
     <main className="page-content shell">
       <SectionHead
         eyebrow={`Blog · ${window.SITE.posts.length.toString().padStart(2, "0")} textos`}
-        title="Notes per pensar millor abans de decidir."
-        blurb="Assajos breus i peces una mica més llargues sobre dret, tecnologia, llenguatge i mètode. Es publiquen quan tenen forma; no quan toca omplir calendari."
+        title="Articles sobre tecnologia, IA i quàntica aplicada al dret."
+        blurb="Articles que tradueixen canvis tecnològics en criteri jurídic útil: què passa, per què importa i com afecta decisions reals en dret, IA i computació quàntica."
       />
       <div className="blog-filters">
         {allTags.map(t => (
