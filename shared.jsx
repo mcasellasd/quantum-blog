@@ -4,7 +4,7 @@ function QuantumMark({ size = 360, animate = true }) {
   // concentric arcs + an orbit dot — sparing quantum motif
   const id = React.useId();
   return (
-    <svg viewBox="0 0 200 200" width={size} height={size} style={{ overflow: "visible", display: "block" }}>
+    <svg viewBox="0 0 200 200" width={size} height={size} className={animate ? "quantum-mark is-animated" : "quantum-mark"}>
       <defs>
         <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.20" />
@@ -38,7 +38,7 @@ function QuantumMark({ size = 360, animate = true }) {
       <ellipse cx="100" cy="100" rx="80" ry="32" fill="none"
         stroke="var(--accent)" strokeWidth="0.6" strokeOpacity="0.4"
         transform="rotate(28 100 100)" />
-      <g style={animate ? { transformOrigin: "100px 100px", animation: "orbit 14s linear infinite" } : {}}>
+      <g className={animate ? "quantum-mark-orbit is-animated" : "quantum-mark-orbit"}>
         <circle cx="180" cy="100" r="3.4" fill="var(--accent)" transform="rotate(28 100 100)" />
       </g>
       <circle cx="100" cy="100" r="3" fill="var(--ink)" />
@@ -121,16 +121,16 @@ function Header({ route, navigate }) {
   };
   return (
     <header className="site-header">
-      <a href="index.html" className="brand" style={{ textDecoration: "none", color: "inherit" }}>
-        <div className="name"><span className="mark" />{window.SITE_NAME || "M. Vasconcelos"}</div>
-        <div className="tag">quantum · ai · law</div>
+      <a href="index.html" className="brand brand-link">
+        <div className="name"><span className="mark" />{window.SITE_NAME || "Ius Quanticum"}</div>
+        <div className="tag">dret · tecnologia · criteri</div>
       </a>
       <nav className="nav">
-        {link("/", "Index")}
+        {link("/", "Inici")}
         {link("/blog", "Blog")}
-        {link("/lab", "Lab")}
-        {link("/research", "Research")}
-        {link("/about", "About")}
+        {link("/lab", "Projectes")}
+        {link("/research", "Recerca")}
+        {link("/about", "Sobre")}
       </nav>
     </header>
   );
@@ -140,36 +140,36 @@ function Footer({ navigate }) {
   return (
     <footer className="site-footer">
       <div>
-        <h6>Colophon</h6>
+        <h6>Colofó</h6>
         <p className="colophon">
-          A working journal at the intersection of quantum information, machine learning, and legal practice.
-          Set in Newsreader &amp; Instrument Serif, with a violet that approximates 405&nbsp;nm.
+          Ius Quanticum és un quadern de treball sobre dret, tecnologia i llenguatge públic.
+          Manté una forma editorial deliberada: ritme lent, criteri fort i projectes en procés.
         </p>
       </div>
       <div>
-        <h6>Sections</h6>
+        <h6>Seccions</h6>
         <ul>
           <li><a href="blog.html">Blog</a></li>
-          <li><a href="lab.html">Lab</a></li>
-          <li><a href="research.html">Research</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="lab.html">Projectes</a></li>
+          <li><a href="research.html">Recerca</a></li>
+          <li><a href="about.html">Sobre</a></li>
         </ul>
       </div>
       <div>
-        <h6>Subscribe</h6>
+        <h6>Seguiment</h6>
         <ul>
-          <li><a href="#">RSS feed</a></li>
-          <li><a href="#">Monthly dispatch</a></li>
-          <li><a href="#">Working papers</a></li>
+          <li><a href="#">Canal RSS</a></li>
+          <li><a href="#">Notes periòdiques</a></li>
+          <li><a href="#">Materials de treball</a></li>
         </ul>
       </div>
       <div>
-        <h6>Elsewhere</h6>
+        <h6>Presència</h6>
         <ul>
-          <li><a href="#">SSRN</a></li>
+          <li><a href="#">Contacte</a></li>
           <li><a href="#">GitHub</a></li>
-          <li><a href="#">ORCID 0000-0001-…</a></li>
-          <li><a href="#">Mastodon</a></li>
+          <li><a href="#">Perfil acadèmic</a></li>
+          <li><a href="#">Xarxes</a></li>
         </ul>
       </div>
     </footer>
@@ -181,7 +181,7 @@ function SectionHead({ eyebrow, title, blurb, aux }) {
     <div className="section-head">
       <div>
         <div className="eyebrow"><span className="dot">●</span>&nbsp; {eyebrow}</div>
-        <h1 className="h1" style={{ marginTop: 18 }}>{title}</h1>
+        <h1 className="h1 section-head-title">{title}</h1>
       </div>
       <div>
         {blurb && <p className="blurb">{blurb}</p>}
@@ -193,7 +193,7 @@ function SectionHead({ eyebrow, title, blurb, aux }) {
 
 function formatDate(iso) {
   const d = new Date(iso);
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return d.toLocaleDateString("ca-ES", { month: "short", day: "numeric", year: "numeric" });
 }
 
 Object.assign(window, { QuantumMark, MiniMark, Header, Footer, SectionHead, formatDate });
