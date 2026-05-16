@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3a;
+    --accent: #c8a96e;
+    --accent2: #6e8ec8;
+    --accent3: #6ec8a9;
+    --text: #e8e8f0;
+    --text-muted: #7070a0;
+    --li: #c8a96e;
+    --sub: #6e8ec8;
+    --blog: #6ec8a9;
+    --ext: #c86e8e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .header p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* STATS BAR */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .tab:hover { border-color: var(--accent); color: var(--accent); }
+  .tab.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 500; }
+
+  /* CONTENT */
+  .content { display: none; }
+  .content.active { display: block; }
+
+  /* QUARTER BLOCK */
+  .quarter {
+    margin-bottom: 28px;
+  }
+
+  .quarter-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .quarter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .quarter-theme {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .quarter-dates {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  /* CONTENT GRID */
+  .items-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 80px 90px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s;
+    cursor: default;
+  }
+
+  .item:hover { border-color: var(--accent2); }
+
+  .item-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .channel-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .ch-li { background: rgba(200,169,110,0.15); color: var(--li); border: 1px solid rgba(200,169,110,0.3); }
+  .ch-sub { background: rgba(110,142,200,0.15); color: var(--sub); border: 1px solid rgba(110,142,200,0.3); }
+  .ch-blog { background: rgba(110,200,169,0.15); color: var(--blog); border: 1px solid rgba(110,200,169,0.3); }
+  .ch-ext { background: rgba(200,110,142,0.15); color: var(--ext); border: 1px solid rgba(200,110,142,0.3); }
+
+  .item-title {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .item-title em {
+    font-style: normal;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+
+  .format-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* STRATEGY VIEW */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .strategy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .strategy-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .strategy-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .strategy-card ul li {
+    font-size: 0.82rem;
+    color: var(--text);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .strategy-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .time-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .time-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent2);
+    margin-bottom: 14px;
+  }
+
+  .time-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .time-row:last-child { border-bottom: none; }
+
+  .time-day {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    width: 80px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .time-task {
+    font-size: 0.82rem;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .time-hours {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  .funnel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .funnel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent3);
+    margin-bottom: 16px;
+  }
+
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .funnel-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .funnel-text {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .funnel-text span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    display: block;
+  }
+
+  .funnel-arrow {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 2px 0 2px 36px;
+  }
+
+  @media (max-width: 700px) {
+    .item { grid-template-columns: 1fr; gap: 6px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .strategy-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.5rem; }
+    .quarter-dates { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Pla de Continguts · Quantum Law Cat</h1>
+  <p>Marca Personal · Juny 2026 — Desembre 2027 · Català</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">52</div>
+    <div class="stat-label">Posts LinkedIn</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">18</div>
+    <div class="stat-label">Newsletters</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Articles externs</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">18</div>
+    <div class="stat-label">Mesos de pla</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--li)"></div>LinkedIn</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--sub)"></div>Substack</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blog)"></div>Blog propi</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ext)"></div>Article extern</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('2026a')">2026 · Fase Sembra</button>
+  <button class="tab" onclick="showTab('2026b')">2026 · Fase Creixement</button>
+  <button class="tab" onclick="showTab('2027a')">2027 · Especialització</button>
+  <button class="tab" onclick="showTab('2027b')">2027 · Conversió</button>
+  <button class="tab" onclick="showTab('estrategia')">Estratègia</button>
+</div>
+
+<!-- TAB 2026a -->
+<div id="tab-2026a" class="content active">
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Fase 0 · Preparació</div>
+        <div class="quarter-theme">Construir la base abans de publicar</div>
+      </div>
+      <div class="quarter-dates">Juny 2026</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">Juny S1</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Reescriure perfil complet: titular, about, experiència en clau quantum law <em>· Acció prèvia, no publicació</em></div>
+        <div class="format-tag">Perfil</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Juny S2</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Crear compte Substack: nom, descripció, disseny, primera pàgina d'about <em>· Acció prèvia</em></div>
+        <div class="format-tag">Setup</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Juny S3</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Identificar 50 persones objectives i seguir-les: responsables col·legis, LegalTech founders, investigadors quantum <em>· Acció prèvia</em></div>
+        <div class="format-tag">Xarxa</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Juny S4</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Comentar amb substància 3 posts de persones objectives. Primera presència visible <em>· Sense publicar res propi</em></div>
+        <div class="format-tag">Comentari</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q3 2026 · Juliol–Agost</div>
+        <div class="quarter-theme">IA i justícia: el problema que tots veuen, pocs entenen</div>
+      </div>
+      <div class="quarter-dates">Jul–Ago 2026</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Jul</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #0 · Benvinguts: qui soc, per què escric sobre quantum law, on vull arribar</div>
+        <div class="format-tag">Newsletter · 800p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">7 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">L'accés a la justícia sempre ha estat un problema de diners. La IA el resoldrà o l'empitjorarà?</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">14 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">3 coses que els advocats no saben sobre com funciona un algoritme</div>
+        <div class="format-tag">Post llista</div>
+      </div>
+      <div class="item">
+        <div class="item-date">21 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">He llegit l'article acadèmic que tothom hauria de llegir sobre IA i justícia · resum accessible de Cantero Gamito 2024</div>
+        <div class="format-tag">Post divulgatiu</div>
+      </div>
+      <div class="item">
+        <div class="item-date">28 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Jutge robot, advocat robot. On posem el límit? Reflexió sobre responsabilitat en sistemes d'IA judicial</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Ago</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #1 · Justícia algorítmica: democratització real o nova desigualtat digital?</div>
+        <div class="format-tag">Newsletter · 1000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">11 Ago</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">L'AI Act europeu i el sector jurídic: el que ningú t'ha explicat en 5 punts</div>
+        <div class="format-tag">Post llista</div>
+      </div>
+      <div class="item">
+        <div class="item-date">25 Ago</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Per què els despatxos d'advocats seran els últims a adoptar IA (i per què s'equivoquen)</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q3 2026 · Setembre</div>
+        <div class="quarter-theme">La bomba de rellotgeria quàntica: el problema que ningú veu venir</div>
+      </div>
+      <div class="quarter-dates">Set 2026</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Set</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #2 · Computació quàntica per a juristes: el que has de saber en 10 minuts</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">8 Set</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">La teva signatura electrònica caducarà. No metafòricament. Aquí el perquè.</div>
+        <div class="format-tag">Post notícia</div>
+      </div>
+      <div class="item">
+        <div class="item-date">15 Set</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">El NIST va publicar els estàndards post-quàntics el 2024. Els teus clients saben que els afecta?</div>
+        <div class="format-tag">Post divulgatiu</div>
+      </div>
+      <div class="item">
+        <div class="item-date">22 Set</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Pregunta per a notaris i registradors: quan va ser l'última vegada que vau auditar la vostra ciberseguretat?</div>
+        <div class="format-tag">Post provocació</div>
+      </div>
+      <div class="item">
+        <div class="item-date">29 Set</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Nota d'alerta: La criptografia post-quàntica i el seu impacte en les professions jurídiques · enviar a butlletins de col·legis</div>
+        <div class="format-tag">Article · 1000p</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB 2026b -->
+<div id="tab-2026b" class="content">
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q4 2026 · Octubre–Novembre</div>
+        <div class="quarter-theme">Regulació europea i el marc que ningú ha connectat</div>
+      </div>
+      <div class="quarter-dates">Oct–Nov 2026</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Oct</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #3 · eIDAS 2.0 i la identitat digital post-quàntica: el reglament que ja prepara el futur</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">6 Oct</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">eIDAS 2.0 és la preparació regulatòria per al món post-quàntic. Gairebé ningú ho ha connectat.</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">13 Oct</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">L'AI Act no parla de computació quàntica. És un error legislatiu o una oportunitat?</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">20 Oct</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">5 startups LegalTech que no existeixen encara però haurien d'existir el 2030</div>
+        <div class="format-tag">Post llista</div>
+      </div>
+      <div class="item">
+        <div class="item-date">27 Oct</div>
+        <div class="channel-badge ch-blog">Blog</div>
+        <div class="item-title">Llançament blog propi · primer article: recopilació dels millors posts del Q3 2026 amb context ampliat</div>
+        <div class="format-tag">Blog · 1500p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Nov</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #4 · Models de negoci en LegalTech quàntic: on són els diners i qui els trobarà</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">10 Nov</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Litigation finance i computació quàntica: el futur de les inversions en litigis que ningú discuteix</div>
+        <div class="format-tag">Post divulgatiu</div>
+      </div>
+      <div class="item">
+        <div class="item-date">17 Nov</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">La primera firma que ofereixi auditoria post-quàntica guanyarà 10 anys de ventatge competitiu</div>
+        <div class="format-tag">Post predicció</div>
+      </div>
+      <div class="item">
+        <div class="item-date">24 Nov</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Buits regulatoris en la transició post-quàntica europea · enviar a IDP, revistes jurídiques digitals</div>
+        <div class="format-tag">Article · 1500p</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q4 2026 · Desembre</div>
+        <div class="quarter-theme">Balanç i projecció: tancar l'any amb autoritat</div>
+      </div>
+      <div class="quarter-dates">Des 2026</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Des</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #5 · 2026 en quantum law: les 5 notícies que han canviat el sector jurídic sense que ningú se n'hagi adonat</div>
+        <div class="format-tag">Newsletter · 1000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">8 Des</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Advocat o tecnòleg? La pregunta equivocada per al 2030. El perfil que realment necessita el mercat.</div>
+        <div class="format-tag">Post opinió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">15 Des</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">6 mesos publicant sobre quantum law en català: el que he après sobre l'estat real del sector</div>
+        <div class="format-tag">Post reflexió</div>
+      </div>
+      <div class="item">
+        <div class="item-date">22 Des</div>
+        <div class="channel-badge ch-blog">Blog</div>
+        <div class="item-title">Article resum anual: Quantum Law 2026 · el mapa complet del que ha passat i el que vindrà</div>
+        <div class="format-tag">Blog · 2000p</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB 2027a -->
+<div id="tab-2027a" class="content">
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q1 2027 · Gener–Març</div>
+        <div class="quarter-theme">Casos pràctics i storytelling: exemples reals, no teoria</div>
+      </div>
+      <div class="quarter-dates">Gen–Mar 2027</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">5 Gen</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #6 · Prediccions quantum law per al 2027: el que passarà i el que no passarà</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">12 Gen</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Cas pràctic: com hauria canviat un gran concurs de creditors si hi hagués hagut due diligence quàntica</div>
+        <div class="format-tag">Post cas pràctic</div>
+      </div>
+      <div class="item">
+        <div class="item-date">19 Gen</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Vaig parlar amb un investigador de quantum computing del BSC. Aquí el que em va dir sobre el dret.</div>
+        <div class="format-tag">Post entrevista</div>
+      </div>
+      <div class="item">
+        <div class="item-date">26 Gen</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">El registre de la propietat és el servei públic més vulnerable a la computació quàntica. Cap debat.</div>
+        <div class="format-tag">Post tesi</div>
+      </div>
+      <div class="item">
+        <div class="item-date">2 Feb</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #7 · Cas pràctic complet: auditoria post-quàntica d'un despatx fictici pas a pas</div>
+        <div class="format-tag">Newsletter · 1500p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">9 Feb</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Detecció de blanqueig de capitals amb computació quàntica: el futur del compliance financer</div>
+        <div class="format-tag">Post divulgatiu</div>
+      </div>
+      <div class="item">
+        <div class="item-date">23 Feb</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Article co-escrit amb investigador tècnic · primera col·laboració acadèmica formal · enviar a think tank o revista indexada</div>
+        <div class="format-tag">Article · 2000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Mar</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #8 · Quantum law a Europa: mapa de qui fa què i on hi ha els forats d'oportunitat</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">15 Mar</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Smart contracts i computació quàntica: quan la seguretat del codi ja no depèn del codi</div>
+        <div class="format-tag">Post tècnic</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q2 2027 · Abril–Juny</div>
+        <div class="quarter-theme">Consolidació: primer any complet, primers resultats visibles</div>
+      </div>
+      <div class="quarter-dates">Abr–Jun 2027</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Abr</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #9 · Identitat digital sobirana i computació quàntica: el repte dels governs europeus</div>
+        <div class="format-tag">Newsletter · 1200p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">7 Abr</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Carta oberta als col·legis d'advocats: per què heu de parlar de risc quàntic als vostres col·legiats ara</div>
+        <div class="format-tag">Post carta oberta</div>
+      </div>
+      <div class="item">
+        <div class="item-date">14 Abr</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Col·laboració amb butlletí d'un col·legi professional · article adaptat sobre risc quàntic per a professionals jurídics</div>
+        <div class="format-tag">Article · 1000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Mai</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #10 · Un any publicant sobre quantum law: el que he après i el que canvio</div>
+        <div class="format-tag">Newsletter · 1000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">12 Mai</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Les 3 preguntes que tot soci d'un despatx hauria de fer al seu proveïdor de signatura digital avui</div>
+        <div class="format-tag">Post utilitat</div>
+      </div>
+      <div class="item">
+        <div class="item-date">26 Mai</div>
+        <div class="channel-badge ch-blog">Blog</div>
+        <div class="item-title">Guia completa: Quantum Law per a professionals jurídics · document de referència actualitzable</div>
+        <div class="format-tag">Blog · 3000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Jun</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #11 · Entrevista a fons: perspectiva d'un investigador europeu en criptografia post-quàntica</div>
+        <div class="format-tag">Newsletter · 1500p</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB 2027b -->
+<div id="tab-2027b" class="content">
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q3 2027 · Juliol–Setembre</div>
+        <div class="quarter-theme">Pivot cap a consultoria: de creador a professional</div>
+      </div>
+      <div class="quarter-dates">Jul–Set 2027</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">1 Jul</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #12 · Quantum law 2027: estat de la qüestió i el que vindrà els propers 24 mesos</div>
+        <div class="format-tag">Newsletter · 1500p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">8 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Anunci: començo a assessorar despatxos i empreses sobre risc quàntic i transició post-quàntica · primer CTA públic</div>
+        <div class="format-tag">Post anunci</div>
+      </div>
+      <div class="item">
+        <div class="item-date">15 Jul</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Quin servei concret ofereixo i a qui: auditoria, formació interna, due diligence tecnològic</div>
+        <div class="format-tag">Post servei</div>
+      </div>
+      <div class="item">
+        <div class="item-date">1 Ago</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #13 · Primera consultoria: el que he après assessorant un client real (sense revelar dades)</div>
+        <div class="format-tag">Newsletter · 1000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Set</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Ponència o participació en jornada LegalTech d'un col·legi professional · objectiu actiu des del Q1 2027</div>
+        <div class="format-tag">Esdeveniment</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quarter">
+    <div class="quarter-header">
+      <div>
+        <div class="quarter-label">Q4 2027 · Octubre–Desembre</div>
+        <div class="quarter-theme">Consultoria llançada, startup en disseny</div>
+      </div>
+      <div class="quarter-dates">Oct–Des 2027</div>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-date">Oct</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #14–16 · Sèrie: Els 3 errors que cometen els despatxos davant el risc quàntic · una per mes</div>
+        <div class="format-tag">Sèrie · 3 entregues</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Nov</div>
+        <div class="channel-badge ch-li">LinkedIn</div>
+        <div class="item-title">Contingut regular 2 posts/setmana + casos reals anonimitzats de la consultoria com a contingut</div>
+        <div class="format-tag">Cadència regular</div>
+      </div>
+      <div class="item">
+        <div class="item-date">Des</div>
+        <div class="channel-badge ch-ext">Extern</div>
+        <div class="item-title">Article anual de referència · Quantum Law a Catalunya 2027 · enviar a El Nacional, VilaWeb tecnologia, o revista jurídica</div>
+        <div class="format-tag">Article · 2000p</div>
+      </div>
+      <div class="item">
+        <div class="item-date">31 Des</div>
+        <div class="channel-badge ch-sub">Substack</div>
+        <div class="item-title">Newsletter #17–18 · Balanç 2027 i full de ruta 2028: de consultoria a startup · anunci públic dels propers passos</div>
+        <div class="format-tag">Newsletter tancament</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB ESTRATEGIA -->
+<div id="tab-estrategia" class="content">
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3>Principis editorials</h3>
+      <ul>
+        <li>Escriu sempre per a l'advocat de 50 anys que no sap res de quantum però intueix que hauria de preocupar-s'hi</li>
+        <li>Una idea per peça. Mai dos temes al mateix post.</li>
+        <li>La pregunta és millor que l'afirmació. Els títols interrogatius generen més interacció.</li>
+        <li>Cita i etiqueta: cada article referencia investigadors, empreses o institucions reals</li>
+        <li>No persegueixis viralitat. Persegueix consistència.</li>
+        <li>Cada newsletter aprofundeix el millor post del mes. No reinventes: redistribueix.</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <h3>Regla del 3-1 mensual</h3>
+      <ul>
+        <li>3 posts LinkedIn basats en novetats o notícies del sector → baixa fricció, alt valor</li>
+        <li>1 post LinkedIn d'opinió o predicció pròpia → aquí construeixes autoritat real</li>
+        <li>1 newsletter mensual → aprofundeix o connecta dos temes del mes</li>
+        <li>1 article extern per trimestre → credibilitat i citabilitat externa</li>
+        <li>1 article de blog per trimestre → actiu SEO propi i document de referència</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="time-block">
+    <h3>Distribució setmanal de les 5+ hores</h3>
+    <div class="time-row">
+      <div class="time-day">Dilluns</div>
+      <div class="time-task">Lectura i investigació: novetats quantum law, regulació europea, LegalTech · alimenta els propers posts</div>
+      <div class="time-hours">1h</div>
+    </div>
+    <div class="time-row">
+      <div class="time-day">Dimecres</div>
+      <div class="time-task">Redacció post LinkedIn setmanal #1 + comentaris en profunditat a 2-3 persones objectives</div>
+      <div class="time-hours">1.5h</div>
+    </div>
+    <div class="time-row">
+      <div class="time-day">Divendres</div>
+      <div class="time-task">Redacció post LinkedIn setmanal #2 · setmanes de newsletter: redacció esborrany (2h extra)</div>
+      <div class="time-hours">1.5h</div>
+    </div>
+    <div class="time-row">
+      <div class="time-day">Dissabte</div>
+      <div class="time-task">Contingut de llarg recorregut: articles de blog, articles externs, newslette final · només cal un dissabte al mes</div>
+      <div class="time-hours">1h+</div>
+    </div>
+  </div>
+
+  <div class="funnel">
+    <h3>El funnel cap a la consultoria</h3>
+    <div class="funnel-step">
+      <div class="funnel-num">1</div>
+      <div class="funnel-text">LinkedIn + Substack + Blog <span>Contingut consistent que construeix autoritat temàtica</span></div>
+    </div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">2</div>
+      <div class="funnel-text">Audiència qualificada (200–500 persones del sector) <span>No seguidors genèrics: responsables de col·legis, socis de despatxos, directius compliance</span></div>
+    </div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">3</div>
+      <div class="funnel-text">Col·laboració amb col·legis i articles externs <span>Credibilitat validada per tercers, URL citable quan et presentes</span></div>
+    </div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">4</div>
+      <div class="funnel-text">Primera consulta o encàrrec puntual <span>Arriba de quelcom que t'ha llegit durant mesos, no d'un anunci</span></div>
+    </div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-step">
+      <div class="funnel-num">5</div>
+      <div class="funnel-text">Consultoria llançada (Q3 2027) → Startup dissenyada (2028) <span>Casos d'èxit documentats que validen el model davant inversors</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
