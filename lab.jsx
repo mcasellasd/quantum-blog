@@ -125,7 +125,7 @@ function ProjectDetail({ slug, navigate }) {
       <section className="project-body">
         <h2>Què fa</h2>
         <p>
-          {p.name} parteix d'una intuïció molt concreta: una idea només comença a ser útil quan accepta prendre forma i exposar les seves limitacions. Per això aquesta peça es presenta com un instrument de lectura o treball, no com una promesa abstracta.
+          {p.name} és una biblioteca visual d'apunts, esquemes i vídeos per estudiar dret espanyol i català amb alta densitat i navegació per branques.
         </p>
         <p>
           {p.summary} {p.angle}
