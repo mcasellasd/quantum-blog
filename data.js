@@ -1,13 +1,4 @@
 window.SITE = {
-  servers: {
-    stitch: {
-      type: "http",
-      url: "https://stitch.googleapis.com/mcp",
-      headers: {
-        "X-Goog-Api-Key": "AQ.Ab8RN6J4hIytRsEtF8vHKw5QMN2x_aWVukiRn2-78uPE2dLqzA"
-      }
-    }
-  },
   posts: [
     {
       slug: "fonaments-fisica-quantica-dret-quantic",
@@ -112,7 +103,7 @@ window.SITE = {
       date: "2026-05-16",
       readMin: 14,
       title: "De la IA clàssica a la Revolució Quàntica: Què necessita saber el sector legal?",
-      dek: "L'advocacia d'empresa i els equips in-house ya conviuen amb la IA clàssica, però la Segona Revolució Quàntica obre un escenari de ruptura que exigeix alfabetització estratègica immediata.",
+      dek: "L'advocacia d'empresa i els equips in-house ja conviuen amb la IA clàssica, però la Segona Revolució Quàntica obre un escenari de ruptura que exigeix alfabetització estratègica immediata.",
       tags: ["ia quàntica", "computació clàssica", "jurisprudència"],
       body: [
         { type: "p", text: "L'advocacia dels negocis i les assessories jurídiques d'empresa (in-house) ja han començat a interioritzar l'impacte de la Intel·ligència Artificial (IA) en el seu dia a dia. Tanmateix, a l'horitzó s'està gestant un canvi tecnològic d'una magnitud superior que no representa una simple millora dels sistemes actuals, sinó una ruptura fonamental en la manera com processem la informació: la Segona Revolució Quàntica." },
@@ -122,12 +113,12 @@ window.SITE = {
         { type: "p", text: "Tal com expliquen els físics Ignacio Cirac i Antonio Acín a la Revista IDEES (Física quàntica i informació), la computació quàntica utilitza bits quàntics o qubits. A causa de les lleis de la mecànica quàntica, un qubit pot trobar-se en una superposició de valors, existint com a 0 i 1 al mateix temps. En l'àmbit jurídic, l'autor Santiago Galán (al seu article a Derecho y Ciencias Sociales) afegeix que aquesta capacitat per prendre múltiples valors simultàniament permetrà realitzar una quantitat d'operacions i càlculs a velocitats totalment inconcebibles per als ordinadors actuals." },
         { type: "h2", text: "2. La transformació del sistema legal: Aplicacions de la Justícia Quàntica" },
         { type: "p", text: "Aquest salt tecnològic cristal·litzarà en aplicacions pràctiques que revolucionaran l'eficiència dels despatxos i els tribunals. Segons Jake Okechukwu Effoduh, investigador i autor al World Economic Forum, la quàntica impactarà de ple en la justícia mitjançant tres grans vies:" },
-        { type: "list", items: ["E-Discovery i l'Algorisme de Grover: En els litigis complexos (on s'acumulen terabytes de proves), buscar informació no estructurada és lent. L'ús de l'algorisme quàntic de Grover accelerarà de manera exponencial la recerca en bases de dades desordenades. Això permetrà als motors de cerca legals trobar proves clau (com un correu incriminatori ocult) o relacions jurisprudencials de forma gairebé instantània.", "Descol·lapsar els tribunals amb QAOA: L'assignació de recursos als jutjats (quadrar agendes de jutges, sales, advocats i testimonis) és un trencaclosques logístic. Mitjançant algoritmes d'optimització quàntica (com el QAOA), els tribunals podran avaluar totes aquestes variables alhora en superposició per generar calendaris perfectes, reduint dràsticament els retards que vulneren els drets dels ciutadans.", "Justícia Predictiva i QML: Quan unim aquesta capacitat de càlcul amb la IA, neix el Quantum Machine Learning (QML). Tal com assenyalen els juristes Alejandro Spessot i Federico Tabares a la Revista Derecho, el QML maximitzarà l'aprenentatge automàtic. Segons Effoduh, aquesta hiper-precisió permetrà predir resultats judicials amb una exactitud inèdita (molt útil en dret fiscal o arbitratges), facilitant acords primerencs i reduint els costos de litigi."] },
+        { type: "list", items: ["E-Discovery i l'Algorisme de Grover: En els litigis complexos (on s'acumulen terabytes de proves), buscar informació no estructurada és lent. L'ús de l'algorisme quàntic de Grover accelerarà de manera exponencial la recerca en bases de dades desordenades. Això permetrà als motors de cerca legals trobar proves clau (com un correu incriminatori ocult) o relacions jurisprudencials de forma gairebé instantània.", "Descol·lapsar els tribunals amb QAOA: L'assignació de recursos als jutjats (quadrar agendes de jutges, sales, advocats i testimonis) és un trencaclosques logístic. Mitjançant algoritmes d'optimització quàntica (com el QAOA), els tribunals podran avaluar totes aquestes variables alhora in superposició per generar calendaris perfectes, reduint dràsticament els retards que vulneren els drets dels ciutadans.", "Justícia Predictiva i QML: Quan unim aquesta capacitat de càlcul amb la IA, neix el Quantum Machine Learning (QML). Tal com assenyalen els juristes Alejandro Spessot i Federico Tabares a la Revista Derecho, el QML maximitzarà l'aprenentatge automàtic. Segons Effoduh, aquesta hiper-precisió permetrà predir resultats judicials amb una exactitud inèdita (molt útil en dret fiscal o arbitratges), facilitant acords primerencs i reduint els costos de litigi."] },
         { type: "h2", text: "3. El Repte Ètic: La 'Caixa Negra' i la Motivació de les Sentències" },
         { type: "p", text: "Tot i els avantatges evidents, els líders legals han d'estar atents als riscos constitucionals. La catedràtica Silvia Barona Vilar, al seu article publicat a la revista Derechos y Libertades de la UC3M, adverteix sobre el perill de delegar la decisió en la màquina." },
         { type: "p", text: "Si un jutge basa la seva sentència en un càlcul quàntic (el qual és inescrutable i funciona com una autèntica 'caixa negra' on no podem observar com s'ha arribat a la conclusió), es vulnera l'exigència de motivar i justificar les decisions judicials, un pilar fonamental de la tutela judicial efectiva i de l'Estat de Dret." },
         { type: "h2", text: "4. El risc de la 'Bretxa Quàntica': Desigualtat d'armes i privilege quàntic" },
-        { type: "p", text: "A més dels desafiaments ètics i tecnològics, els líders del sector legal han d'estar alerta davant l'aparició de l'anomenada 'bretxa quàntica' o quantum privilege a escala global. Actualment, la infraestructura necessària per fer funcionar ordinadors quàntics és extremadament costosa i complexa de mantenir, ja que requereireix entorns d'alt buit i temperatures properes al zero absolut. Aquest alt cost d'entrada fa que, inicialment, només els estats més rics i les grans corporacions multinacionals puguin accedir-hi, fet que genera una perillosa asimetria." },
+        { type: "p", text: "A més dels desafiaments ètics i tecnològics, els líders del sector legal han d'estar alerta davant l'aparició de l'anomenada 'bretxa quàntica' o quantum privilege a escala global. Actualment, la infraestructura necessària per fer funcionar ordinadors quàntics és extremadament costosa i complexa de mantenir, ja que requereix entorns d'alt buit i temperatures properes al zero absolut. Aquest alt cost d'entrada fa que, inicialment, només els estats més rics i les grans corporacions multinacionals puguin accedir-hi, fet que genera una perillosa asimetria." },
         { type: "p", text: "Traduït a l'àmbit processal, això pot trencar completament el principi d'igualtat d'armes: en un litigi corporatiu, una part amb accés a la potència d'anàlisi quàntica tindria un avantatge probatori i estratègic aclaparador enfront d'una contrapart que només disposés de recursos informàtics clàssics. Tal com adverteix el Fòrum Econòmic Mundial, sense un marc de governança que en democratitzi l'accés, la tecnologia quàntica amenaça d'exacerbar les desigualtats ja existents en els sistemes judicials i amplificar l'actual bretxa de la intel·ligència artificial." },
         { type: "h2", text: "Conclusió: Cap a l'Alfabetització Quàntica" },
         { type: "p", text: "En resum, com apunta el WEF, no es tracta de convertir els advocats en físics, sinó de promoure la 'alfabetització quàntica' dins del sector legal. Només entenent com funciona l'avantatge quàntic podrem aprofitar l'e-discovery accelerat i l'optimització d'agendes, tot assegurant-nos que la tecnologia no suplanti el raonament ètic i humà que la justícia requereix." },
@@ -263,7 +254,7 @@ window.SITE = {
       category: "administratiu",
       source: "Regio7",
       urgency: "normal",
-      summary: "La notícia apunta a una aposta institucional per capacitació en IA dins l'administració. El punt jurídic rellevant és la governança d'ús: protocols, responsabilitat de decisió humana i traçabilitat de processos assistits.",
+      summary: "La notícia apunta a una aposta institutional per capacitació en IA dins l'administració. El punt jurídic rellevant és la governança d'ús: protocols, responsabilitat de decisió humana i traçabilitat de processos assistits.",
       why: "Impacta contractació pública, procediment administratiu i qualitat del servei públic digital.",
       url: "https://www.regio7.cat/arreu-catalunya-espanya-mon/2026/05/16/generalitat-destina-cinc-milions-euros-formacio-intelligencia-artificial-funcionaris-catalunya-salvador-illa-ia-microsoft-130286894.html"
     },
@@ -508,7 +499,7 @@ window.SITE.dailyRecaps = {
       },
       judicial: {
         actions: [
-          "Investigar com auditar judicialment el codi font d'un algorisme de càlcul quan es presenta en un litigi.",
+          "Investigar com auditar judicialment el codi font d'un algorisme de càlcul quand es presenta en un litigi.",
           "Establir com opera la inversió de la càrrega de la prova quand una de les parts acusa l'altra de discriminació algorítmica.",
           "Definir el marc de motivació exigible als informes pericials que tradueixen decisions complexes de caixes negres."
         ],
@@ -536,7 +527,7 @@ window.SITE.dailyRecaps = {
       public: {
         actions: [
           "Revisar el tractament tècnic que es dona als diaris oficials i col·leccions de sentències autonòmiques per a ús de tercers.",
-          "Assegurar que els portals estatals de dades obertes no limiten inconstitucionalment la recerca universitària sense ànim de lucre.",
+          "Assegurar que os portals estatals de dades obertes no limiten inconstitucionalment la recerca universitària sense ànim de lucre.",
           "Implementar protocols robots.txt homogenis en tots els dominis públics de dades catalans."
         ],
         risk: "Apropriació exclusiva de la jurisprudència i coneixement públic per part de grans multinacionals privades de la intel·ligència artificial.",
@@ -582,7 +573,7 @@ window.SITE.dailyRecaps = {
         actions: [
           "Estudiar la naturalesa de la intervenció humana exigible per evitar la prohibició del RGPD art. 22 sobre decisions automatitzades.",
           "Determinar si les pautes administratives d'APDCAT tenen força vinculant plena sobre el procediment en tribunals.",
-          "Formular els requisits exigibles a les pericials en supòsits de discriminació indirecta derivada d'un score de risc."
+          "Formular os requisits exigibles a les pericials en supòsits de discriminació indirecta derivada d'un score de risc."
         ],
         risk: "Admetre el segellat cec administratiu com a 'intervenció humana' (rubber stamping), buidant de contingut real les garanties constitucionals dels afectats.",
         opportunity: "Llegar un marc conceptual innovador sobre la 'llibertat algorítmica individual' i les garanties del ciutadà davant la digitalització local."

@@ -1,6 +1,11 @@
+
+
 // home.jsx — landing page
 
+
+
 function Home({ navigate }) {
+
   const posts = window.SITE.posts;
   const latest = posts[0];
 
@@ -28,7 +33,7 @@ function Home({ navigate }) {
             Dret. Tecnologia. Quàntica. IA.
           </h1>
           <p className="lede">
-            Ius Quanticum és un espai de pedagogia i experimentació acadèmcia en català sobre dret i les noves tecnologia. Un espai d'exploració en obert on es publiquen notícies, projectes i materials de recerca en procés. 
+            Ius Quanticum és un espai de pedagogia i experimentació acadèmica en català sobre dret i les noves tecnologies. Un espai d'exploració en obert on es publiquen notícies, projectes i materials de recerca en procés. 
           </p>
           <div className="hero-meta">
             <span><b>{window.SITE.posts.length}</b> textos oberts</span>

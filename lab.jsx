@@ -15,7 +15,7 @@ function LabIndex({ navigate }) {
     <main className="page-content shell">
       <SectionHead
         eyebrow={`Projectes · ${window.SITE.projects.length.toString().padStart(2, "0")} peces`}
-        title="Lab acadèmic d'un estudiant de dret amb IA."
+        title="Lab acadèmic d'un estudiant de dret (pre)ocupat amb IA"
         blurb="Un espai de prova per convertir dubtes jurídics en eines reals de lectura, orientació i context. La suite Què diu la llei integra cerca, temàtiques i Hermes en un únic projecte."
         aux={<div className="eyebrow stack-top-md"><span className="dot">●</span>&nbsp; {(counts.live || 0).toString().padStart(2, "0")} live · {(counts.beta || 0).toString().padStart(2, "0")} beta · {(counts.concept || 0).toString().padStart(2, "0")} concept</div>}
       />
@@ -125,10 +125,10 @@ function ProjectDetail({ slug, navigate }) {
       <section className="project-body">
         <h2>Què fa</h2>
         <p>
-          {p.name} és una biblioteca visual d'apunts, esquemes i vídeos per estudiar dret espanyol i català amb alta densitat i navegació per branques.
+          {p.summary}
         </p>
         <p>
-          {p.summary} {p.angle}
+          {p.angle}
         </p>
 
         <div className="sketch">
