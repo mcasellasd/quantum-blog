@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 import httpx
 from legal_mcp import cercar_boe_recent, cercar_dogc_recent, fetch_boe_recent_raw, fetch_dogc_recent_raw, collect_items
 
+# Path to the LexIA (rss legal cat) project data
+LEXIA_DATA_PATH = "/Users/marccasellas/Desktop/docus2024/DOCUS 2026/rss legal cat/feedjuridic/data/novetats.json"
+
 async def fetch_boe_for_date(client, date_obj):
     """
     Fetches the BOE summary for a specific date and returns structured items.
@@ -108,17 +111,29 @@ async def generate_daily_alerts():
         "dogc": {"items": []}
     })
 
-    # 4. JSON Payload
+    # 4. Fetch LexIA (IA i Dret) data if available
+    lexia_items = []
+    if os.path.exists(LEXIA_DATA_PATH):
+        try:
+            with open(LEXIA_DATA_PATH, "r", encoding="utf-8") as f:
+                lexia_items = json.load(f)
+            # Only keep very recent ones or all? The user wants to "use what we generate".
+            # Let's keep all for now as the component can filter.
+        except Exception as e:
+            print(f"Error reading LexIA data: {e}")
+
+    # 5. JSON Payload
     json_payload = {
         "last_updated": datetime.now().isoformat(),
         "date_str": latest_date,
         "boe": latest_payload["boe"],
         "dogc": latest_payload["dogc"],
+        "lexia": lexia_items,
         "history": history,
         "dates": sorted_dates
     }
 
-    # 5. Markdown Report Content
+    # 6. Markdown Report Content
     boe_summary = await cercar_boe_recent(limit=10)
     dogc_summary = await cercar_dogc_recent(limit=10)
     

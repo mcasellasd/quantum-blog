@@ -238,6 +238,36 @@ window.SITE = {
 
   actualitat: [
     {
+      date: "2026-05-22",
+      title: "Promulgació de la Llei 5/2026 de mesures urgents per al sector agrari i forestal",
+      category: "administratiu",
+      source: "DOGC",
+      urgency: "alta",
+      summary: "La nova Llei 5/2026 estableix un paquet de mesures extraordinàries i urgents de finançament, simplificació administrativa i bonificacions fiscals destinades a pal·liar els efectes climàtics i econòmics en les explotacions agràries i forestals de Catalunya.",
+      why: "Afecta directament les relacions contractuals agràries, requisits ambientals i el marc de subvencions actives al territori.",
+      url: "https://portaljuridic.gencat.cat/eli/es-ct/l/2026/05/20/5/dof/cat/html"
+    },
+    {
+      date: "2026-05-22",
+      title: "Convalidació del Reial Decret llei 10/2026 de mesures tributàries i de suport per la DANA",
+      category: "regulatori",
+      source: "BOE",
+      urgency: "alta",
+      summary: "El Congrés convalida el paquet de mesures fiscals, exempcions i ajuts directes urgents per pal·liar els danys soferts per les víctimes i empreses de la DANA, consolidant el marc d'escut social i econòmic.",
+      why: "Defineix el calendari de sol·licitud d'exempcions d'IBI, IAE i ajuts directes per a corporacions i autònoms afectats.",
+      url: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-10986"
+    },
+    {
+      date: "2026-05-22",
+      title: "Modificació de les bases de subvencions de formació 'A Mida' de Catalunya",
+      category: "regulatori",
+      source: "DOGC",
+      urgency: "normal",
+      summary: "L'Ordre EMT/83/2026 introdueix ajustos operatius, canvis en els requisits de cofinançament i nous criteris de justificació telemàtica de les ajudes per a programes formatius fets a mida a les empreses pel Consorci per a la Formació Contínua de Catalunya.",
+      why: "Obliga a actualitzar els protocols de sol·licitud i justificació tècnica per a les empreses beneficiaries.",
+      url: "https://portaljuridic.gencat.cat/eli/es-ct/o/2026/05/18/emt83/dof/cat/html"
+    },
+    {
       date: "2026-05-20",
       title: "Publicació oficial de l'AI Act de la Unió Europea al Diari Oficial (DOUE)",
       category: "regulatori",
@@ -337,6 +367,42 @@ window.SITE = {
 };
 
 window.SITE.dailyRecaps = {
+  "2026-05-22": {
+    theme: "Mesures d'Urgència: Reforç Agrari, Escut Social DANA i Subvencions Corporatives",
+    urgency: "alta",
+    pressureLabel: "Alta ⚡",
+    pressureValue: 85,
+    summary: "Jornada marcada per publicacions d'alt impacte social i econòmic. A nivell estatal, el Congrés consolida el marc d'ajuts i exempcions tributàries urgents per la DANA. A nivell autonòmic, Catalunya promulga la Llei 5/2026 per blindar el sector agrari i forestal davant crisis climàtiques i actualitza el programa de formació 'A Mida' corporatiu.",
+    profiles: {
+      corporate: {
+        actions: [
+          "Verificar la línia de subvencions modificada per l'Ordre EMT/83/2026 per a les empreses beneficiàries de programes 'A Mida'.",
+          "Analitzar l'impacte de les exempcions d'IAE i IBI publicades al BOE en actius de filials ubicades en zones afectades pel RDL 10/2026.",
+          "Adequar els contractes d'arrendament rústic als nous criteris de flexibilització de la Llei 5/2026."
+        ],
+        risk: "Terminis molt estrictes i requisits de justificació telemàtica reforçats per a no perdre drets d'exempció tributària o subvencions en curs.",
+        opportunity: "Aprofitar els nous canals de simplificació de tràmits agraris i línies d'ajut de formació customitzada per a reorganització de plantilles."
+      },
+      public: {
+        actions: [
+          "Implementar els nous canals de tramitació simplificada i d'urgència establerts per la Llei 5/2026 al sector forestal i agrari.",
+          "Garantir la coordinació interadministrativa per a la gestió dels ajuts directes derivats de la convalidació del RDL 10/2026.",
+          "Actualitzar els aplicatius telemàtics de justificació de subvencions de formació contínua segons l'EMT/83/2026."
+        ],
+        risk: "Col·lapse en oficines d'atenció comarcal a causa del paquet de mesures de xoc si no s'automatitzen les validacions bàsiques de dades.",
+        opportunity: "Modernitzar la finestreta única del ciutadà en l'àmbit rural mitjançant les noves prerrogatives de simplificació."
+      },
+      judicial: {
+        actions: [
+          "Estudiar la jurisprudència recent sobre dret de rescissió o moratòria en contractes de conreu afectats per força major climàtica sota la Llei 5/2026.",
+          "Analitzar la naturalesa dels ajuts directes convalidats de la DANA en front de possibles reclamacions de creditors o embargaments.",
+          "Avaluar els canvis de procediment administratiu en matèria de subvencions impugnades."
+        ],
+        risk: "Increment de litigis contractuals en el sector primari a causa de la interpretació de situacions d'emergència i pèrdues de collita.",
+        opportunity: "Establir doctrina clara sobre la protecció del teixit productiu primari en situacions catastròfiques."
+      }
+    }
+  },
   "2026-05-20": {
     theme: "Inici de l'era AI Act: Compte enrere regulatori",
     urgency: "alta",

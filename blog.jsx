@@ -20,8 +20,20 @@ function renderPostBlock(block, key) {
 function BlogIndex({ navigate }) {
   const allTags = ["all", ...Array.from(new Set(window.SITE.posts.flatMap(p => p.tags)))];
   const [filter, setFilter] = React.useState("all");
+  const [lexiaHighlights, setLexiaHighlights] = React.useState([]);
 
   const posts = window.SITE.posts.filter(p => filter === "all" || p.tags.includes(filter));
+
+  React.useEffect(() => {
+    fetch("latest_alerts.json")
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.lexia) {
+          setLexiaHighlights(data.lexia.slice(0, 3));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <main className="page-content shell">
@@ -30,6 +42,30 @@ function BlogIndex({ navigate }) {
         title="Articles sobre tecnologia, IA i quàntica aplicada al dret."
         blurb="Articles que tradueixen canvis tecnològics en criteri jurídic útil: què passa, per què importa i com afecta decisions reals en dret, IA i computació quàntica."
       />
+
+      {lexiaHighlights.length > 0 && (
+        <section className="blog-lexia-highlights">
+          <div className="lexia-h-label">
+            <span className="dot">●</span> Darreres alertes d'IA i Dret (LexIA)
+          </div>
+          <div className="lexia-h-grid">
+            {lexiaHighlights.map((item, idx) => (
+              <div key={idx} className="lexia-h-card" onClick={() => navigate("/actualitat")}>
+                <div className="lexia-h-meta">
+                  <span className="cat">{item.categoria}</span>
+                  <span className="date">{formatDate(item.data)}</span>
+                </div>
+                <h4 className="lexia-h-title">{item.titol}</h4>
+                <p className="lexia-h-summary">{item.resum_executiu}</p>
+              </div>
+            ))}
+          </div>
+          <button className="lexia-h-more" onClick={() => navigate("/actualitat")}>
+            veure totes les alertes d'IA →
+          </button>
+        </section>
+      )}
+
       <div className="blog-filters">
         {allTags.map(t => (
           <button key={t} className={filter === t ? "on" : ""} onClick={() => setFilter(t)}>

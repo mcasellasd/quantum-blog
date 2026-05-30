@@ -10,14 +10,14 @@ function Research({ navigate }) {
   const [activeProfile, setActiveProfile] = React.useState("corporate"); // 'corporate' | 'public' | 'judicial'
   
   // States for live legislative feed integration
-  const [activeTab, setActiveTab] = React.useState("editorial"); // 'editorial' | 'bulletins'
+  const [activeTab, setActiveTab] = React.useState("ia"); // 'ia' | 'editorial' | 'bulletins'
   const [alertsData, setAlertsData] = React.useState(null);
   const [selectedAlertsDate, setSelectedAlertsDate] = React.useState("");
   const [loadingAlerts, setLoadingAlerts] = React.useState(false);
   const [alertsError, setAlertsError] = React.useState(null);
 
   React.useEffect(() => {
-    if (activeTab === "bulletins" && !alertsData) {
+    if ((activeTab === "bulletins" || activeTab === "ia") && !alertsData) {
       setLoadingAlerts(true);
       fetch("latest_alerts.json")
         .then(res => {
@@ -98,6 +98,12 @@ function Research({ navigate }) {
       {/* Modern Tab Selector */}
       <div className="research-tab-selector">
         <button 
+          className={`research-tab-btn ${activeTab === "ia" ? "active" : ""}`}
+          onClick={() => setActiveTab("ia")}
+        >
+          ✦ IA i Dret (LexIA)
+        </button>
+        <button 
           className={`research-tab-btn ${activeTab === "editorial" ? "active" : ""}`}
           onClick={() => setActiveTab("editorial")}
         >
@@ -111,7 +117,83 @@ function Research({ navigate }) {
         </button>
       </div>
 
-      {activeTab === "editorial" ? (
+      {activeTab === "ia" ? (
+        <div className="lexia-container">
+          <div className="lexia-header-panel">
+            <div className="lexia-kicker">✦ Dret al dIA · Intel·ligència Artificial i Dret Digital</div>
+            <h2 className="lexia-main-title">Seguiment de novetats sobre IA i Dret</h2>
+            <p className="lexia-intro">Monitoratge diari de novetats jurídiques relacionades amb la IA, l'automatització i la regulació tecnològica, analitzades per IA i filtrades per rellevància jurídica.</p>
+            {alertsData && (
+              <div className="lexia-meta">
+                <span>Darrera actualització: <b>{alertsData.last_updated ? new Date(alertsData.last_updated).toLocaleString("ca-ES") : "N/D"}</b></span>
+                <span>Total alertes IA: <b>{alertsData.lexia ? alertsData.lexia.length : 0}</b></span>
+              </div>
+            )}
+          </div>
+
+          <div className="lexia-feed">
+            {loadingAlerts && (
+              <div className="empty-results-box">
+                <div className="spinner"></div>
+                <p>Carregant dades del monitor d'IA i Dret...</p>
+              </div>
+            )}
+
+            {alertsError && (
+              <div className="empty-results-box">
+                <p>⚠️ {alertsError}</p>
+              </div>
+            )}
+
+            {alertsData && alertsData.lexia && alertsData.lexia.length > 0 ? (
+              <div className="lexia-grid">
+                {alertsData.lexia.map((item, idx) => (
+                  <article key={idx} className={`lexia-item premium-card ${item.urgencia === "alta" ? "urgent-card" : ""}`}>
+                    <div className="lexia-item-head">
+                      <div className="lexia-badges">
+                        <span className={`lexia-cat-badge is-${item.categoria}`}>{item.categoria}</span>
+                        {item.urgencia === "alta" && <span className="lexia-urgent-badge">urgent</span>}
+                      </div>
+                      <span className="lexia-date">{item.data ? formatDate(item.data) : ""}</span>
+                    </div>
+                    <h3 className="lexia-title">{item.titol}</h3>
+                    <p className="lexia-summary">{item.resum_executiu}</p>
+                    
+                    {item.impacte_practic && (
+                      <div className="lexia-impact">
+                        <span className="lexia-label">Impacte pràctic</span>
+                        <p>{item.impacte_practic}</p>
+                      </div>
+                    )}
+
+                    <div className="lexia-tags">
+                      {(item.paraules_clau || []).map(kw => (
+                        <span key={kw} className="lexia-tag">#{kw}</span>
+                      ))}
+                    </div>
+
+                    <div className="lexia-footer">
+                      <span className="lexia-source">Font: <b>{item.font_web || item.font}</b></span>
+                      {item.url && (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer" className="lexia-link">
+                          Veure font original ↗
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              !loadingAlerts && (
+                <div className="empty-results-box">
+                  <h3>No hi ha alertes d'IA disponibles</h3>
+                  <p>No s'han trobat novetats sobre intel·ligència artificial en el monitor encara.</p>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      ) : activeTab === "editorial" ? (
         <>
           {/* Modern Control Center */}
           <div className="news-control-center">
