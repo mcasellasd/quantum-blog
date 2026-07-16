@@ -3,6 +3,8 @@
 function Research({ navigate }) {
   const items = (window.SITE.actualitat || []).slice().sort((a, b) => b.date.localeCompare(a.date));
   const recaps = window.SITE.dailyRecaps || {};
+  const biblio = window.SITE.biblioteca || { intro: "", groups: [] };
+  const biblioRefCount = biblio.groups.reduce((n, g) => n + g.refs.length, 0);
 
   const [activeDate, setActiveDate] = React.useState("");
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -114,6 +116,12 @@ function Research({ navigate }) {
           onClick={() => setActiveTab("bulletins")}
         >
           📡 Monitor de Diaris Oficials (BOE / DOGC)
+        </button>
+        <button
+          className={`research-tab-btn ${activeTab === "biblio" ? "active" : ""}`}
+          onClick={() => setActiveTab("biblio")}
+        >
+          📚 Biblioteca de Fonaments
         </button>
       </div>
 
@@ -406,6 +414,50 @@ function Research({ navigate }) {
             </div>
           )}
         </>
+      ) : activeTab === "biblio" ? (
+        /* Foundations Library Tab Content */
+        <div className="lexia-container">
+          <div className="lexia-header-panel">
+            <div className="lexia-kicker">📚 Biblioteca de Fonaments · Programa de recerca</div>
+            <h2 className="lexia-main-title">Quantum-inspired tensor networks i raonament jurídic</h2>
+            <p className="lexia-intro">{biblio.intro}</p>
+            <div className="lexia-meta">
+              <span>línies de recerca <b>{biblio.groups.length}</b></span>
+              <span>referències verificades <b>{biblioRefCount}</b></span>
+            </div>
+          </div>
+
+          {biblio.groups.map((group) => (
+            <section key={group.id} style={{ marginTop: "36px" }}>
+              <h3 className="monitor-column-title">{group.line}</h3>
+              <p className="lexia-intro" style={{ maxWidth: "72ch" }}>{group.why}</p>
+              <div className="lexia-grid" style={{ marginTop: "16px" }}>
+                {group.refs.map((ref) => (
+                  <article key={ref.title} className="lexia-item premium-card">
+                    <div className="lexia-item-head">
+                      <div className="lexia-badges">
+                        <span className="lexia-cat-badge">{group.line}</span>
+                      </div>
+                      <span className="lexia-date">{ref.year}</span>
+                    </div>
+                    <h3 className="lexia-title">{ref.title}</h3>
+                    <p className="lexia-summary"><b>{ref.authors}</b></p>
+                    <div className="lexia-impact">
+                      <span className="lexia-label">Per què és útil per al projecte</span>
+                      <p>{ref.note}</p>
+                    </div>
+                    <div className="lexia-footer">
+                      <span className="lexia-source">{ref.venue}</span>
+                      <a href={ref.url} target="_blank" rel="noopener noreferrer" className="lexia-link">
+                        Veure font original ↗
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       ) : (
         /* Bulletins Live Monitor Tab Content */
         <div className="live-monitor-container">

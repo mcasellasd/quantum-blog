@@ -41,6 +41,7 @@ const ACCENT_INK = {
 function App() {
   const [route, navigate] = useHashRoute();
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  console.log("App renderitzant, ruta activa:", route);
 
   // apply tweaks
   React.useEffect(() => {
@@ -53,12 +54,22 @@ function App() {
 
   // route resolution
   const renderRoute = () => {
+    const Home = window.Home;
+    const BlogIndex = window.BlogIndex;
+    const Article = window.Article;
+    const LabIndex = window.LabIndex;
+    const ProjectDetail = window.ProjectDetail;
+    const Research = window.Research;
+    const Glossari = window.Glossari;
+    const About = window.About;
+
     if (route === "/" || route === "") return <Home navigate={navigate} />;
     if (route === "/blog") return <BlogIndex navigate={navigate} />;
     if (route.startsWith("/blog/")) return <Article slug={route.split("/")[2]} navigate={navigate} />;
     if (route === "/lab") return <LabIndex navigate={navigate} />;
     if (route.startsWith("/lab/")) return <ProjectDetail slug={route.split("/")[2]} navigate={navigate} />;
     if (route === "/actualitat" || route === "/research") return <Research navigate={navigate} />;
+    if (route === "/glossari") return Glossari ? <Glossari navigate={navigate} /> : <div>Carregant Glossari...</div>;
     if (route === "/about") return <About navigate={navigate} />;
     return <Home navigate={navigate} />;
   };

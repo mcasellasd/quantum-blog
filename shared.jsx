@@ -94,11 +94,12 @@ function MiniMark({ kind = "circles" }) {
 // Map top-level routes to entry HTML files so each section has a real bookmarkable URL
 const PAGE_FILES = {
   "/": "index.html",
-  "/blog": "blog-index.html",
+  "/blog": "blog.html",
   "/lab": "lab.html",
   "/actualitat": "research.html",
   "/research": "research.html",
   "/about": "about.html",
+  "/glossari": "glossari.html",
 };
 
 function Header({ route, navigate }) {
@@ -131,6 +132,7 @@ function Header({ route, navigate }) {
         {link("/blog", "Blog")}
         {link("/lab", "Projectes")}
         {link("/actualitat", "Actualitat")}
+        {link("/glossari", "Glossari")}
         {link("/about", "Sobre")}
       </nav>
     </header>
@@ -150,7 +152,7 @@ function Footer({ navigate }) {
       <div>
         <h6>Seccions</h6>
         <ul>
-          <li><a href="blog-index.html">Blog</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li><a href="lab.html">Projectes</a></li>
           <li><a href="research.html">Actualitat</a></li>
           <li><a href="about.html">Sobre</a></li>
